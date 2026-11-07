@@ -13,6 +13,18 @@ const submitButton = document.getElementById("submitButton");
 const cancelButton = document.getElementById("cancelButton");
 const message = document.getElementById("message");
 
+function getInitials(name) {
+    if (!name || !name.trim()) {
+        return "";
+    }
+
+    return name
+        .trim()
+        .split(/\s+/)
+        .map(word => word.charAt(0).toUpperCase())
+        .join("");
+}
+
 // Display message
 function showMessage(text, color) {
     message.textContent = text;
@@ -34,7 +46,7 @@ async function getAllUsers() {
 
         if (users.length === 0) {
             tableBody.innerHTML =
-                "<tr><td colspan='5'>No users found</td></tr>";
+                "<tr><td colspan='6'>No users found</td></tr>";
             return;
         }
 
@@ -46,6 +58,9 @@ async function getAllUsers() {
 
             const nameCell = document.createElement("td");
             nameCell.textContent = user.name;
+
+            const initialsCell = document.createElement("td");
+             initialsCell.textContent = getInitials(user.name);
 
             const emailCell = document.createElement("td");
             emailCell.textContent = user.email;
@@ -71,9 +86,9 @@ async function getAllUsers() {
 
             actionCell.appendChild(editButton);
             actionCell.appendChild(deleteButton);
-
             row.appendChild(idCell);
             row.appendChild(nameCell);
+            row.appendChild(initialsCell);
             row.appendChild(emailCell);
             row.appendChild(phoneCell);
             row.appendChild(actionCell);
